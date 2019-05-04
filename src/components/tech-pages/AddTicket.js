@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import Dropdown from '../form-pages/Dropdown';
+import DropdownResource from '../form-pages/Dropdown-Resource';
+import DropdownClient from '../form-pages/Dropdown-Client';
 
 class AddTicket extends Component {
 
@@ -10,7 +11,7 @@ class AddTicket extends Component {
     status: "",
     priority: "",
     issueType: "",
-    primaryResource: "<<Select One>>" ,
+    primaryResource: "" ,
     ticketTitle:"",
     ticketDescription: "",
     isSubmitSuccessful: false,  
@@ -19,6 +20,16 @@ class AddTicket extends Component {
   genericSync(event) {
     const { name, value } = event.target;
     this.setState({ [name]: value });
+  }
+
+  updateTech(tech){
+    console.log("from add ticket" ,tech)
+    this.setState({primaryResource:tech})    
+  }
+
+  updateClient(client){
+    //console.log("from add ticket" ,tech)
+    this.setState({accountName:client})    
   }
 
   handleSubmit(event){
@@ -37,18 +48,16 @@ class AddTicket extends Component {
   }
 
   render(){
+    //console.log("add ticket comp: ",this.state)
     return(
       <section>
         <h2> Add Ticket</h2>
         <form onSubmit={ event => this.handleSubmit(event) } >
           <label> Account Name: </label>
-          <input 
-              value = { this.state.accountName }
-              onChange={ e => this.genericSync(e) }
-              type = "text"
-              name = "accountName"
-              placeholder = ""
-          />
+          <DropdownClient 
+            updateTheClient={client=>this.updateClient(client)}           
+           />
+          
 
           <label> Contact: </label>
           <input 
@@ -88,12 +97,8 @@ class AddTicket extends Component {
 
           <label> Primary Resource: </label>      
 
-           <Dropdown 
-            value = { this.state.primaryResource }
-            onChange={ e => this.genericSync(e) }
-            type = "text"
-            name = "primaryResource"
-            placeholder = ""
+           <DropdownResource 
+            updateTheParent={tech=>this.updateTech(tech)}
            
            />
            
