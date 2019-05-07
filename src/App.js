@@ -9,6 +9,8 @@ import Signup from './components/user-pages/Signup';
 import Login from './components/user-pages/Login';
 import Home from './components/Home';
 import AddTicket from './components/tech-pages/AddTicket'
+import AddClient from './components/client-pages/Add-Client'
+import ClientList from './components/client-pages/Client-List'
 
 
 
@@ -55,6 +57,8 @@ class App extends Component {
               <NavLink to="/signup-page"> Signup </NavLink>
               <NavLink to="/login-page"> Login </NavLink>
               <NavLink to="/add-ticket"> Add Ticket </NavLink>
+              <NavLink to="/add-client"> Add Client </NavLink>
+              <NavLink to="/client-list">Client List </NavLink>
             </span>
           ) }
 
@@ -85,6 +89,8 @@ class App extends Component {
           }  />
 
           <Route path="/add-ticket" component={ AddTicket }/>
+          <Route path="/add-client" component={ AddClient }/>
+          <Route path="/client-list" component={ ClientList }/>
           
         </Switch>
 

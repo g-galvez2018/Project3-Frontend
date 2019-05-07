@@ -8,35 +8,30 @@ class DropdownClient extends Component {
     singleClient: "",
   }
 
-  genericSync(event) {    
-    this.setState({ singleClient:event.target.value },() => this.sendUpdate());    
-  }
-
-  sendUpdate(){
-    console.log(this.state)
-    this.props.updateTheClient(this.state.singleClient)
-  }
-
   componentDidMount(){
     axios.get("http://localhost:3001/clients/clientListApi", { withCredentials:true })
-    .then(client =>  {  
-      //console.log(techs.data.data)       
+    .then(client =>  {            
       this.setState ({clients:client.data.data})        
     });
   }
 
-    render () {  
-     // console.log(this.state)
-      return (
-        <div className="drop-down">
-            <select onChange={ e => this.genericSync(e) } value={this.state.singleClient}   name="singleClient">
-                  <option>--Select Account Name--</option>
-                { this.state.clients.map((client) => <option key={client._id} value={client.accountName}>{client.accountName}</option>) }
-                
-            </select>
-        </div>
-      ) 
-    }
-}
+  pickupUser(e){
+    this.props.sendUser(e.target.value)
+  }
+
+  render (){
+    const { clients } = this.state;
+    return (
+      <div>
+        <select onChange={ e => this.pickupUser(e) } >
+        <option>--Select Account Name--</option>
+        { clients.map(user => <option key={ user._id } value={ user.accountName }> { user.accountName } </option> ) }
+        </select>
+      </div>
+    )
+  }  
+} 
+
+
 
 export default DropdownClient;

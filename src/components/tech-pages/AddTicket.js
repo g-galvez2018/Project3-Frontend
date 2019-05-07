@@ -20,16 +20,14 @@ class AddTicket extends Component {
   genericSync(event) {
     const { name, value } = event.target;
     this.setState({ [name]: value });
-  }
+  }  
 
-  updateTech(tech){
-    console.log("from add ticket" ,tech)
-    this.setState({primaryResource:tech})    
-  }
-
-  updateClient(client){
-    //console.log("from add ticket" ,tech)
+  getClient(client){    
     this.setState({accountName:client})    
+  }
+
+  getTech(technician){
+    this.setState({ primaryResource: technician})
   }
 
   handleSubmit(event){
@@ -54,10 +52,8 @@ class AddTicket extends Component {
         <h2> Add Ticket</h2>
         <form onSubmit={ event => this.handleSubmit(event) } >
           <label> Account Name: </label>
-          <DropdownClient 
-            updateTheClient={client=>this.updateClient(client)}           
-           />
-          
+          <DropdownClient sendUser={ user => this.getClient(user) }  />
+          <br />
 
           <label> Contact: </label>
           <input 
@@ -67,41 +63,40 @@ class AddTicket extends Component {
               name = "contact"
               placeholder = ""
           />
+          <br />
 
           <label> Status: </label>
-          <input 
-              value = { this.state.status }
-              onChange={ e => this.genericSync(e) }
-              type = "text"
-              name = "status"
-              placeholder = ""
-          />
+          <select value={ this.state.status } name="status" onChange= { event => this.genericSync(event) } >
+                  <option value="--Select Status--" >--Select Status-- </option>
+                  <option value="New"  > New </option>
+                  <option value="In Progress" > In Progress </option>
+                  <option value="Waiting on Customer" > Waiting on Customer </option>
+                  <option value="Complete" > Complete </option>
+          </select>
+          <br />
 
           <label> Priority: </label>
-          <input 
-              value = { this.state.priority }
-              onChange={ e => this.genericSync(e) }
-              type = "text"
-              name = "priority"
-              placeholder = ""
-          />
+          <select value={ this.state.priority } name="priority" onChange= { event => this.genericSync(event) } >
+                  <option value="--Select Priority--" >--Select Priority-- </option>
+                  <option value="Low"> Low </option>
+                  <option value="Medium"> Medium </option>  
+                  <option value="High"> High </option>                
+          </select>
+          <br />
 
           <label> Issue Type: </label>
-          <input 
-              value = { this.state.issueType }
-              onChange={ e => this.genericSync(e) }
-              type = "text"
-              name = "issueType"
-              placeholder = ""
-           />
+          <select value={ this.state.issueType } name="issueType" onChange= { event => this.genericSync(event) } >
+                  <option value="--Select Issue Type--" >--Select Issue Type-- </option>
+                  <option value="Infrastructure">Infrastructure</option>
+                  <option value="Hardware"> Hardware </option>  
+                  <option value="Software"> Software </option> 
+                  <option value="User Administration"> User Administration </option>               
+          </select>
+           <br />
 
-          <label> Primary Resource: </label>      
-
-           <DropdownResource 
-            updateTheParent={tech=>this.updateTech(tech)}
-           
-           />
-           
+          <label> Primary Resource: </label> 
+          <DropdownResource sendUser={ user => this.getTech(user) }  />
+          <br /> 
 
            <label> Ticket Title: </label>
             <input 
@@ -111,15 +106,17 @@ class AddTicket extends Component {
               name = "ticketTitle"
               placeholder = ""
            />
+           <br />
 
           <label> Ticket Description: </label>
-            <input 
+            <textarea 
               value = { this.state.ticketDescription }
               onChange={ e => this.genericSync(e) }
               type = "text"
               name = "ticketDescription"
               placeholder = ""
            />
+           <br />
            <button>Submit</button>        
         
         </form>
