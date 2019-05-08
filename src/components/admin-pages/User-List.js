@@ -52,4 +52,3 @@ class ClientList extends Component {
 }
 
 export default ClientList;
-

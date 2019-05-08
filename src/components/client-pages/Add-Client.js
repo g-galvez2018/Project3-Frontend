@@ -32,7 +32,7 @@ class AddClient extends Component {
         { withCredentials: true }
     )
     .then( response => {
-        console.log("new ticket: ", response.data);
+        console.log("new client: ", response.data);
         this.setState({ isSubmitSuccessful: true })
     } )
     .catch( err => console.log(err) );

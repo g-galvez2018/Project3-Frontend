@@ -11,6 +11,7 @@ import Home from './components/Home';
 import AddTicket from './components/tech-pages/AddTicket'
 import AddClient from './components/client-pages/Add-Client'
 import ClientList from './components/client-pages/Client-List'
+import EditClient from './components/client-pages/Edit-Client'
 
 
 
@@ -91,6 +92,7 @@ class App extends Component {
           <Route path="/add-ticket" component={ AddTicket }/>
           <Route path="/add-client" component={ AddClient }/>
           <Route path="/client-list" component={ ClientList }/>
+          <Route path="/edit-client/:clientId" component={ EditClient}/>
           
         </Switch>
 

@@ -4,39 +4,65 @@ import axios from "axios";
 class EditClient extends Component {
   
   state = {
-      accountname: this.props.accountName,
-      address1: this.props.address1,
-      Phone: this.props.Phone,
-      active: this.props.active
-  }
+      accountName: "",
+      address1: "",
+      Phone: "",
+      active: false        
+  }  
 
+  //Update state of inputs
   genericSync(event) {
     const { name, value } = event.target;
     this.setState({ [name]: value });
   }
 
-  handleSubmit(event) {
-    // stop the page refresh
-    event.preventDefault();
-
-    // PUT and POST requests receive a 2nd argument: the info to submit
-    // (we are submitting the state we've gathered from the form)
-    axios.put(
-      process.env.REACT_APP_SERVER_URL + `/api/phones/${this.props.thePhone._id}`,
-      this.state,
-      { withCredentials: true } // FORCE axios to send cookies across domains
-    )
-      .then(response => {
-        //   instead of using <Redirect /> we use this.props.history.push()
-        this.props.history.push('/phone-list'); 
-      })
-      .catch(err => {
-        console.log("Update Phone ERROR", err);
-        alert("Sorry! Something went wrong.");
-      });
+  //Update state of checkbox
+  toggleChange = () => {
+    this.setState({
+      active: !this.state.active      
+    });    
   }
 
-  render(){
+  componentDidMount() {
+    const { match: { params } } = this.props;
+    //console.log(params.clientId)  
+    axios.get(`http://localhost:3001/clients/clientListEdit/${params.clientId}`)
+    .then(response => {
+      console.log(response.data.data);
+      // update our state array with the data from the API
+      this.setState({ 
+                      accountName: response.data.data.accountName,
+                      address1: response.data.data.address1,
+                      Phone:response.data.data.Phone,
+                      active: response.data.data.active
+                    });
+      console.log(this.state)
+    })
+      .catch(err => {
+        //console.log("Phone List ERROR", err);
+        alert("Sorry! Something went wrong.");
+    });
+  }
+
+  handleSubmit(event) {    
+    event.preventDefault(); 
+    const { match: { params } } = this.props;
+    console.log("submit", this.state)  
+    axios.put(     
+        `http://localhost:3001/clients/updateClient/${params.clientId}`,
+         this.state,
+        { withCredentials: true }
+    )
+    .then( response => {
+        console.log("updated client: ", response.data);        
+    } )
+    .catch( err => console.log(err) );
+     
+  }
+
+  
+
+  render(){    
     return(
       <section>
         <form onSubmit={event => this.handleSubmit(event)}>
@@ -45,8 +71,7 @@ class EditClient extends Component {
               value = { this.state.accountName }
               onChange={ e => this.genericSync(e) }
               type = "text"
-              name = "accountName"
-              
+              name = "accountName"              
            />
            <br />          
 
@@ -55,8 +80,7 @@ class EditClient extends Component {
               value = { this.state.address1 }
               onChange={ e => this.genericSync(e) }
               type = "text"
-              name = "address1"
-              
+              name = "address1"              
            />
            <br />
 
@@ -65,8 +89,7 @@ class EditClient extends Component {
               value = { this.state.Phone }
               onChange={ e => this.genericSync(e) }
               type = "text"
-              name = "Phone"
-              
+              name = "Phone"              
            />
            <br />
 
