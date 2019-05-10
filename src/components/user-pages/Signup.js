@@ -50,9 +50,9 @@ class Signup extends Component {
                 <div className="card-header">
                     <h3 className="mb-0 my-2">Create Account</h3>
                 </div>
-                <div class="card-body">       
+                <div className="card-body">       
                     <form onSubmit={ event => this.handleSubmit(event) } >
-                       <div class="form-group">
+                       <div className="form-group">
                             <label> Full Name </label>
                             <input
                                 className="form-control"
@@ -63,7 +63,7 @@ class Signup extends Component {
                                 placeholder="Full Name"
                             />
                         </div>
-                        <div class="form-group">
+                        <div className="form-group">
                             <label> Email </label>
                             <input
                                 className="form-control"
@@ -74,7 +74,7 @@ class Signup extends Component {
                                 placeholder="Email Address"
                             />
                         </div>
-                        <div class="form-group">
+                        <div className="form-group">
                             <label> Password </label>
                             <input
                                 className="form-control"
@@ -86,7 +86,7 @@ class Signup extends Component {
                             />
                         </div>
                         
-                        <button class="btn btn-secondary btn-lg btn-block"> Sign Up </button>
+                        <button className="btn btn-secondary btn-lg btn-block"> Sign Up </button>
                     </form>
                     {/* if the message is not NULL then show the message */}
                     { this.state.message && <div> { this.state.message } </div> }

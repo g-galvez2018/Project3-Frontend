@@ -5,8 +5,7 @@ import { Link } from "react-router-dom";
 class UserList extends Component {
     state = {
       userArray:[]
-    }   
-
+    } 
     componentDidMount() {
       // retrieve the info from the API as soon as the component loads
       axios.get(
@@ -27,54 +26,44 @@ class UserList extends Component {
     render(){
       const { userArray } = this.state;
       return(
-        <section>
+        <section className="row">
+        <div className="col-md-6 mx-auto">
           <h2> Users </h2>
-              <p>Currently we have: { userArray.length } users.</p>
-              <ul>
-                    { userArray.map((oneUser) => {
-                      return(
-                        <li key={ oneUser._id }>
-                            <Link to={`/edit-user/${oneUser._id}`}> 
-                              { oneUser.fullName } 
-                            </Link>
-                        </li>                  
-                      )
-                    })}
-              </ul>
-
-        
-
-            <table className="table table-hover">
-            <thead>
+            <p>Currently we have: { userArray.length } users.</p>
+            <table className="table table-sm table-hover">
+              <thead>
               <tr>
                 <th scope="col">Full Name</th>
-                <th scope="col">Email Address</th>                
+                <th scope="col">Email Address</th> 
+                <th scope="col">Status</th>  
+                <th scope="col">Action</th>              
               </tr>
             </thead>
             <tbody>
-                    { userArray.map((oneUser) => {
-                      return(
-                        <tr key={ oneUser._id }>
-                            <td> 
-                                <Link to={`/edit-user/${oneUser._id}`}> 
-                                  { oneUser.fullName } 
-                                </Link>
-                            </td>
-                            <td> 
-                                <Link to={`/edit-user/${oneUser._id}`}> 
-                                  { oneUser.email } 
-                                </Link>
-                            </td>
-                            <td>
-                              
-                            </td>
-                        </tr>                  
-                      )
-                    })}             
-              
+              { userArray.map((oneUser) => {
+                return(
+                  <tr key={ oneUser._id }>
+                      <td>                                
+                        { oneUser.fullName }                                
+                      </td>
+                      <td>                                
+                          { oneUser.email }                                
+                      </td>
+                      <td>
+                        { oneUser.status } 
+                      </td>
+                      <td>
+                        <Link to={`/edit-user/${oneUser._id}`}> 
+                          <button className="btn btn-secondary btn-sm">Edit</button> 
+                        </Link>
+                      </td>
+                  </tr>                  
+                )
+              })}
             </tbody>
-            </table>
-        </section>
+          </table>
+        </div>
+      </section>
       )
     }
 }

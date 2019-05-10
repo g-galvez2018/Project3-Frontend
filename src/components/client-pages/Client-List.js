@@ -8,8 +8,6 @@ class ClientList extends Component {
     }    
 
     componentDidMount() {
-      // console.log(`${process.env.REACT_APP_API_URL}/clients/clientList`)
-      // retrieve the info from the API as soon as the component loads
       axios.get(
         `${process.env.REACT_APP_API_URL}/clients/clientList`,
         
@@ -24,29 +22,42 @@ class ClientList extends Component {
           console.log("Phone List ERROR", err);
           alert("Sorry! Something went wrong.");
       });
-    }
-
-    
+    }    
 
     render(){
       const { clientArray } = this.state;
       return(
-        <section>
+        <section className="row">
+         <div className="col-md-9 mx-auto">
           <h2> Clients </h2>
               <p>Currently we have: { clientArray.length } clients.</p>
-              <ul>
-                    { clientArray.map((oneClient) => {
-                      return(
-                        <li key={ oneClient._id }>
-                            <Link to={`/edit-client/${oneClient._id}`}> 
-                              { oneClient.accountName } 
-                            </Link>
-                        </li>                  
-                      )
-                    })}
-              </ul>
-
-        </section>
+              <table className="table table-sm table-hover">
+              <thead>
+                <tr>
+                  <th scope="col">Account Name</th>
+                  <th scope="col">Address</th> 
+                  <th scope="col">Phone</th>  
+                  <th scope="col">Active</th>              
+                </tr>
+             </thead>
+            <tbody>              
+                { clientArray.map((oneClient) => {
+                  return(
+                    <tr key={ oneClient._id }>
+                        <td> {oneClient.accountName} </td>
+                        <td> {oneClient.address1} </td>
+                        <td> {oneClient.Phone} </td>                        
+                        <td><Link to={`/edit-client/${oneClient._id}`}>
+                          <button className="btn btn-secondary btn-sm">Edit</button>  
+                          </Link>
+                        </td>                                             
+                    </tr>                  
+                  )
+                })}              
+            </tbody>
+          </table>
+        </div>
+      </section>
       )
     }
 }

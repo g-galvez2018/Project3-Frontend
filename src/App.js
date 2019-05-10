@@ -14,15 +14,15 @@ import ClientList from './components/client-pages/Client-List'
 import EditClient from './components/client-pages/Edit-Client'
 import UserList from './components/admin-pages/User-List'
 import EditUser from './components/admin-pages/Edit-User'
-
-
+import Navbar from './components/site-pages/Navbar'
 
 class App extends Component {
   constructor(){
     super();
     this.state = {
       currentUser: null,
-      role: ""
+      role: null,
+      name: null,
     }
   }
 
@@ -40,79 +40,48 @@ class App extends Component {
   // this is the method for updating "currentUser"
   // (must be defined in App.js since it's the owner of "currentUser" now)
   syncCurrentUser(user){
-    this.setState({ currentUser: user });
-    //this.setState({role: this.state.currentUser.role})
-    //console.log("usuario",this.state.currentUser.role)
+    this.setState({ currentUser: user });    
+    //this.setState({ role: user.role})
+    //this.setState({ name: user.fullName })
+    //console.log("usuario",this.state.name)
   }
-
 
   render() {
     //const {role} = this.state.currentUser
    // console.log(role)
     return (
-      <div className="App">
-      <div className="container">
-        <header>
-         <h1> Iron Task </h1>
-         <nav>
-          {/* Home will be always visible to everyone */}
-            <NavLink to="/"> Home </NavLink>
+      <div className="App">        
+        <div className="container">
+          {this.state.currentUser ?(
+            <Navbar userName={this.state.name} onUserChange={ userDoc => this.syncCurrentUser(userDoc) } />
+          ):
+          <Navbar />}
+            <Switch>
+              {/* this is example how to normally do the Route: */}
+              {/* <Route path="/somePage" component={ someComponentThatWillRenderWhenUSerClickThisLink }   /> */}
+              <Route exact path="/" component={ Home } />
+                {/* this way we use when we are passing params down to componentDidMount() {
+                  so we can't use component={}, but instead we have to use render ={() => <someComponent/>}
+                }
+                  */}
+              <Route path="/signup-page" render={ () => 
+                <Signup currentUser={this.state.currentUser} 
+                onUserChange={ userDoc => this.syncCurrentUser(userDoc) }   />
+               }  />
+              
+              <Route path="/login-page" render={ () => 
+                <Login currentUser={ this.state.currentUser } 
+                onUserChange={userDoc => this.syncCurrentUser(userDoc)} />
+              }  />
 
-          { (this.state.role === "Client") ? 
-            // these pages will be visible only if the user exists
-            <span>
-              <NavLink to="/client-list">Client List </NavLink>
-              <NavLink to="/user-list">User List </NavLink>
-              <NavLink to="/add-client"> Add Client </NavLink>
-              <NavLink to="/signup-page"> Signup </NavLink>             
-            </span>
-          : 
-            // these pages will be visible only if there is no user in the session
-            <span>
-              <NavLink to="/signup-page"> Signup </NavLink>
-              <NavLink to="/login-page"> Login </NavLink>
-              <NavLink to="/add-ticket"> Add Ticket </NavLink>
-              <NavLink to="/login-page2"> Login Page 2 </NavLink>
-              <NavLink to="/client-list">Client List </NavLink>
-              <NavLink to="/user-list">User List </NavLink>
-            </span>
-           }           
-         </nav>
-        </header>
-
-        <Switch>
-          {/* this is example how to normally do the Route: */}
-          {/* <Route path="/somePage" component={ someComponentThatWillRenderWhenUSerClickThisLink }   /> */}
-          <Route exact path="/" component={ Home } />
-
-
-         {/* this way we use when we are passing params down to componentDidMount() {
-           so we can't use component={}, but instead we have to use render ={() => <someComponent/>}
-         }
-          */}
-          <Route path="/signup-page" render={ () => 
-            <Signup currentUser={this.state.currentUser} 
-            onUserChange={ userDoc => this.syncCurrentUser(userDoc) }   />
-          }  />
-
-          
-          <Route path="/login-page" render={ () => 
-            <Login currentUser={ this.state.currentUser } 
-            onUserChange={userDoc => this.syncCurrentUser(userDoc)} />
-          }  />
-
-          <Route path="/add-ticket" component={ AddTicket }/>
-          <Route path="/add-client" component={ AddClient }/>
-          <Route path="/client-list" component={ ClientList }/>
-          <Route path="/edit-client/:clientId" component={ EditClient }/>
-          <Route path="/user-list" component={ UserList }/>
-          <Route path="/edit-user/:userId" component={ EditUser }/>
-          
-          
-        </Switch>
-
-        
-
+              <Route path="/add-ticket" component={ AddTicket }/>
+              <Route path="/add-client" component={ AddClient }/>
+              <Route path="/client-list" component={ ClientList }/>
+              <Route path="/edit-client/:clientId" component={ EditClient }/>
+              <Route path="/user-list" component={ UserList }/>
+              <Route path="/edit-user/:userId" component={ EditUser }/>             
+              
+            </Switch>
         </div>
       </div>
     );

@@ -23,7 +23,8 @@ class DropdownClient extends Component {
     
     return (
       <div >
-        <select className="form-control" onChange={ e => this.pickupUser(e) } >        
+        <select className="form-control" onChange={ e => this.pickupUser(e) } > 
+        <option>-- Select Account Name --</option>       
         { clients.map(user => <option key={ user._id } value={ user.accountName }> { user.accountName } </option> ) }
         </select>
       </div>
