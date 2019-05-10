@@ -5,14 +5,14 @@ import { Link } from "react-router-dom";
 class ClientList extends Component {
     state = {
       clientArray:[]
-    }
-
-    
+    }    
 
     componentDidMount() {
+      // console.log(`${process.env.REACT_APP_API_URL}/clients/clientList`)
       // retrieve the info from the API as soon as the component loads
       axios.get(
-        "http://localhost:3001/clients/clientList",
+        `${process.env.REACT_APP_API_URL}/clients/clientList`,
+        
       { withCredentials: true } // FORCE axios to send cookies across domains
       )
       .then(response => {

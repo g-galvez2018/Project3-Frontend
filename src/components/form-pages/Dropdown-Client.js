@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-
 import axios from 'axios';
 
 class DropdownClient extends Component {
@@ -9,7 +8,7 @@ class DropdownClient extends Component {
   }
 
   componentDidMount(){
-    axios.get("http://localhost:3001/clients/clientListApi", { withCredentials:true })
+    axios.get(`${process.env.REACT_APP_API_URL}/clients/clientListApi`, { withCredentials:true })
     .then(client =>  {            
       this.setState ({clients:client.data.data})        
     });
@@ -21,10 +20,10 @@ class DropdownClient extends Component {
 
   render (){
     const { clients } = this.state;
+    
     return (
-      <div>
-        <select onChange={ e => this.pickupUser(e) } >
-        <option>--Select Account Name--</option>
+      <div >
+        <select className="form-control" onChange={ e => this.pickupUser(e) } >        
         { clients.map(user => <option key={ user._id } value={ user.accountName }> { user.accountName } </option> ) }
         </select>
       </div>

@@ -9,25 +9,21 @@ class AddClient extends Component {
     active:false,    
     isSubmitSuccessful:false
   }
-
   genericSync(event) {
     const { name, value } = event.target;
-    this.setState({ [name]: value });
-    //console.log(this.state)
+    this.setState({ [name]: value });    
   } 
-
   toggleChange = () => {
     this.setState({
       active: !this.state.active      
-    });
-    //console.log(this.state)
+    });   
   }
 
   handleSubmit(event){
     event.preventDefault();
     console.log(this.state)
     axios.post(
-        "http://localhost:3001/clients/addClient",
+        `${process.env.REACT_APP_API_URL}/clients/addClient`,
         this.state,
         { withCredentials: true }
     )
@@ -73,7 +69,8 @@ class AddClient extends Component {
            <br />
 
           <label>Active:</label>
-          <input type="checkbox"
+          <input 
+              type="checkbox"
               name="active"
               checked={this.state.active}
               onChange={this.toggleChange}

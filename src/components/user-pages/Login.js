@@ -21,7 +21,7 @@ class Login extends Component {
         event.preventDefault();
     
         axios.post(
-            "http://localhost:3001/api/login",
+            `${process.env.REACT_APP_API_URL}/api/login`,
             this.state,
             { withCredentials: true }, // FORCE axios to send cookies across domains
         )
@@ -48,32 +48,44 @@ class Login extends Component {
             return <Redirect to="/" />
         }
         return(
-            <section className="LoginPage">
-                    <h2>Log In</h2>
-
-                    <form onSubmit={event => this.handleSubmit(event)}>
-                        <label> Email:  </label>
-                        <input 
-                            value={this.state.email}
-                            onChange={event => this.genericSync(event)}
-                            type="email" 
-                            name="email" 
-                            placeholder="superstar@ironhack.com" 
-                        />
-            
-                        <label> Password: </label>
-                        <input 
-                            value={this.state.originalPassword}
-                            onChange={event => this.genericSync(event)}
-                            type="password" 
-                            name="originalPassword" 
-                            placeholder="****"
-                        />
-                        <button>Log In</button>
-                    </form>
-                    { this.state.message && <div> { this.state.message } </div> }
-            </section>
-        )
+            <div className="row">
+                <div className="col-md-6 mx-auto">
+                    <div className="card rounded-0">
+                        <div className="card-header">
+                            <h3 className="mb-0 my-2">Sign in</h3>
+                        </div>
+                    <div className="card-body">
+                        <form onSubmit={event => this.handleSubmit(event)}>
+                            <div className="form-group">
+                                <label> Email:  </label>
+                                <input 
+                                    className="form-control"
+                                    value={this.state.email}
+                                    onChange={event => this.genericSync(event)}
+                                    type="email" 
+                                    name="email" 
+                                    placeholder="Email address" 
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label>Password:</label>
+                                <input 
+                                    className="form-control"
+                                    value={this.state.originalPassword}
+                                    onChange={event => this.genericSync(event)}
+                                    type="password" 
+                                    name="originalPassword" 
+                                    placeholder="*******"
+                                />
+                            </div>
+                            <button className="btn btn-secondary btn-lg btn-block">Log In</button>
+                        </form>
+                        { this.state.message && <div> { this.state.message } </div> }
+                    </div>
+                </div>
+            </div>
+        </div>
+       )
     }
 }
 

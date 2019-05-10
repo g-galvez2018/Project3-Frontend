@@ -8,7 +8,7 @@ class DropdownResource extends Component {
   }
 
   componentDidMount(){
-    axios.get("http://localhost:3001/api/usersListApi?role=Technician", { withCredentials:true })
+    axios.get(`${process.env.REACT_APP_API_URL}/api/usersListApi?role=Technician`, { withCredentials:true })
     .then(techs =>  {              
       this.setState ({technicians:techs.data.data})        
     });
@@ -22,7 +22,7 @@ class DropdownResource extends Component {
     const { technicians } = this.state;
     return (
       <div>
-        <select onChange={ e => this.pickupUser(e) } >
+        <select className="form-control"onChange={ e => this.pickupUser(e) } >
         <option>--Select Technician--</option>
         { technicians.map(user => <option key={ user._id } value={ user.fullName }> { user.fullName } </option> ) }
         </select>

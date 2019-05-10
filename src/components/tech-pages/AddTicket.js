@@ -3,6 +3,7 @@ import axios from 'axios';
 import DropdownResource from '../form-pages/Dropdown-Resource';
 import DropdownClient from '../form-pages/Dropdown-Client';
 
+
 class AddTicket extends Component {
 
   state = {
@@ -34,7 +35,7 @@ class AddTicket extends Component {
     event.preventDefault();
 
     axios.post(
-        "http://localhost:3001/tickets/addTicket",
+      `${process.env.REACT_APP_API_URL}/tickets/addTicket`,
         this.state,
         { withCredentials: true }
     )
@@ -46,27 +47,31 @@ class AddTicket extends Component {
   }
 
   render(){
-    //console.log("add ticket comp: ",this.state)
-    return(
-      <section>
-        <h2> Add Ticket</h2>
-        <form onSubmit={ event => this.handleSubmit(event) } >
-          <label> Account Name: </label>
-          <DropdownClient sendUser={ user => this.getClient(user) }  />
-          <br />
-
-          <label> Contact: </label>
-          <input 
-              value = { this.state.contact }
-              onChange={ e => this.genericSync(e) }
-              type = "text"
-              name = "contact"
-              placeholder = ""
-          />
-          <br />
+      return(
+        <div className="row">
+        <div className="col-sm-8 col-md-6 mx-auto">      
+        
+            <form onSubmit={ event => this.handleSubmit(event) } >
+            
+                <div className="form-group">
+                  <label> Account Name: </label>                  
+                  <DropdownClient sendUser={ user => this.getClient(user) } className="form-control"  />
+                </div>
+                
+                <div className="form-group">
+                    <label> Contact: </label>
+                    <input className="form-control"
+                        value = { this.state.contact }
+                        onChange={ e => this.genericSync(e) }
+                        type = "text"
+                        name = "contact"
+                        placeholder = ""
+                    />
+                </div>
+                
 
           <label> Status: </label>
-          <select value={ this.state.status } name="status" onChange= { event => this.genericSync(event) } >
+          <select className="form-control" value={ this.state.status } name="status" onChange= { event => this.genericSync(event) } >
                   <option value="--Select Status--" >--Select Status-- </option>
                   <option value="New"  > New </option>
                   <option value="In Progress" > In Progress </option>
@@ -76,7 +81,7 @@ class AddTicket extends Component {
           <br />
 
           <label> Priority: </label>
-          <select value={ this.state.priority } name="priority" onChange= { event => this.genericSync(event) } >
+          <select className="form-control" value={ this.state.priority } name="priority" onChange= { event => this.genericSync(event) } >
                   <option value="--Select Priority--" >--Select Priority-- </option>
                   <option value="Low"> Low </option>
                   <option value="Medium"> Medium </option>  
@@ -85,7 +90,7 @@ class AddTicket extends Component {
           <br />
 
           <label> Issue Type: </label>
-          <select value={ this.state.issueType } name="issueType" onChange= { event => this.genericSync(event) } >
+          <select className="form-control" value={ this.state.issueType } name="issueType" onChange= { event => this.genericSync(event) } >
                   <option value="--Select Issue Type--" >--Select Issue Type-- </option>
                   <option value="Infrastructure">Infrastructure</option>
                   <option value="Hardware"> Hardware </option>  
@@ -99,7 +104,7 @@ class AddTicket extends Component {
           <br /> 
 
            <label> Ticket Title: </label>
-            <input 
+            <input className="form-control"
               value = { this.state.ticketTitle }
               onChange={ e => this.genericSync(e) }
               type = "text"
@@ -109,18 +114,22 @@ class AddTicket extends Component {
            <br />
 
           <label> Ticket Description: </label>
-            <textarea 
+            <textarea className="form-control z-depth-1"
               value = { this.state.ticketDescription }
               onChange={ e => this.genericSync(e) }
+              rows="6"
               type = "text"
               name = "ticketDescription"
-              placeholder = ""
+              placeholder = "Add Ticket Summary"
            />
            <br />
-           <button>Submit</button>        
+           
+           <button className="btn btn-secondary btn-lg btn-block">Submit</button>        
         
         </form>
-      </section>
+        </div>
+        </div>
+     
     )
   }
 

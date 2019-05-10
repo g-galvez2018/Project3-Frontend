@@ -2,53 +2,81 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from "react-router-dom";
 
-class ClientList extends Component {
+class UserList extends Component {
     state = {
-      clientArray:[]
-    }
-
-    
+      userArray:[]
+    }   
 
     componentDidMount() {
       // retrieve the info from the API as soon as the component loads
       axios.get(
-        "http://localhost:3001/clients/clientList",
-      { withCredentials: true } // FORCE axios to send cookies across domains
+        `${process.env.REACT_APP_API_URL}/api/usersList`,
+        // { withCredentials: true } // FORCE axios to send cookies across domains
       )
       .then(response => {
-          console.log("ClientList", response.data.data);
+          console.log("UserList front = = =", response.data.data);
           // update our state array with the data from the API
-          this.setState({ clientArray: response.data.data });
+          this.setState({ userArray: response.data.data });
       })
       .catch(err => {
-          console.log("Phone List ERROR", err);
+          console.log("User List ERROR", err.response);
           alert("Sorry! Something went wrong.");
       });
-    }
-
-    
+    }    
 
     render(){
-      const { clientArray } = this.state;
+      const { userArray } = this.state;
       return(
         <section>
-          <h2> Clients </h2>
-              <p>Currently we have: { clientArray.length } clients.</p>
+          <h2> Users </h2>
+              <p>Currently we have: { userArray.length } users.</p>
               <ul>
-                    { clientArray.map((oneClient) => {
+                    { userArray.map((oneUser) => {
                       return(
-                        <li key={ oneClient._id }>
-                            <Link to={`/edit-client/${oneClient._id}`}> 
-                              { oneClient.accountName } 
+                        <li key={ oneUser._id }>
+                            <Link to={`/edit-user/${oneUser._id}`}> 
+                              { oneUser.fullName } 
                             </Link>
                         </li>                  
                       )
                     })}
               </ul>
 
+        
+
+            <table className="table table-hover">
+            <thead>
+              <tr>
+                <th scope="col">Full Name</th>
+                <th scope="col">Email Address</th>                
+              </tr>
+            </thead>
+            <tbody>
+                    { userArray.map((oneUser) => {
+                      return(
+                        <tr key={ oneUser._id }>
+                            <td> 
+                                <Link to={`/edit-user/${oneUser._id}`}> 
+                                  { oneUser.fullName } 
+                                </Link>
+                            </td>
+                            <td> 
+                                <Link to={`/edit-user/${oneUser._id}`}> 
+                                  { oneUser.email } 
+                                </Link>
+                            </td>
+                            <td>
+                              
+                            </td>
+                        </tr>                  
+                      )
+                    })}             
+              
+            </tbody>
+            </table>
         </section>
       )
     }
 }
 
-export default ClientList;
+export default UserList;
