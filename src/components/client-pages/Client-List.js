@@ -37,7 +37,7 @@ class ClientList extends Component {
                   <th scope="col">Account Name</th>
                   <th scope="col">Address</th> 
                   <th scope="col">Phone</th>  
-                  <th scope="col">Active</th>              
+                  <th scope="col">Action</th>              
                 </tr>
              </thead>
             <tbody>              
