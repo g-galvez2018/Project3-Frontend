@@ -29,6 +29,7 @@ class AddClient extends Component {
     .then( response => {
         console.log("new client: ", response.data);
         this.setState({ isSubmitSuccessful: true })
+        this.props.history.push('/client-list')
     } )
     .catch( err => console.log(err) );
   }

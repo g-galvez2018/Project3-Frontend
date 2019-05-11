@@ -43,7 +43,8 @@ class EditUser extends Component {
         { withCredentials: true }
     )
     .then( response => {
-        console.log("updated user: ", response.data.data);        
+        console.log("updated user: ", response.data.data);  
+        this.props.history.push('/user-list')      
     } )
     .catch( err => console.log(err) );
      
