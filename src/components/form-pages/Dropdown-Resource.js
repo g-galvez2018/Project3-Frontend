@@ -22,7 +22,7 @@ class DropdownResource extends Component {
     const { technicians } = this.state;
     return (
       <div>
-        <select className="form-control"onChange={ e => this.pickupUser(e) } >
+        <select className="form-control"onChange={ e => this.pickupUser(e) } value = {this.props.selectedTechnician} >
         <option>--Select Technician--</option>
         { technicians.map(user => <option key={ user._id } value={ user.fullName }> { user.fullName } </option> ) }
         </select>

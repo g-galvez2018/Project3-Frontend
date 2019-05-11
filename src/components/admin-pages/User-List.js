@@ -27,7 +27,7 @@ class UserList extends Component {
       const { userArray } = this.state;
       return(
         <section className="row">
-        <div className="col-md-6 mx-auto">
+        <div className="col-md-9 mx-auto">
           <h2> Users </h2>
             <p>Currently we have: { userArray.length } users.</p>
             <table className="table table-sm table-hover">

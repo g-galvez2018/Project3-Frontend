@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
-import { NavLink, Redirect } from "react-router-dom";
+import { NavLink} from "react-router-dom";
 
-class Navbar extends Component { 
+class NavbarDefault extends Component { 
 
   render(){
     console.log("navbar", this.props)
-     if (this.props.userRole === "Client" || this.props.userRole === "Technician" || this.props.userRole === "") 
-     {
-       return null;
-     }
+     
     return(
       <header>
       <nav className="navbar navbar-expand-lg navbar-light bg-light mt-5 mb-5">  
@@ -18,20 +15,9 @@ class Navbar extends Component {
           </button>
         <div className="collapse navbar-collapse" id="navbarText">
           <ul className="navbar-nav mr-auto">            
-            <li className="nav-item">
-              <NavLink className="nav-link" to="/user-list">User List </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink className="nav-link" to="/client-list">Client List </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink className="nav-link" to="/add-ticket"> Add Ticket </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink className="nav-link" to="/add-client"> Add Client </NavLink>
-            </li>
+                  
           </ul>  
-          <span>{this.props.userName}</span>             
+                         
           
           {this.props.currentUser ?
             (<ul className="navbar-nav  justify-content-end">            
@@ -61,4 +47,4 @@ class Navbar extends Component {
 
 }
 
-export default Navbar;
+export default NavbarDefault;

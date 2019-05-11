@@ -4,7 +4,7 @@ import DropdownResource from '../form-pages/Dropdown-Resource';
 import DropdownClient from '../form-pages/Dropdown-Client';
 
 
-class AddTicket extends Component {
+class EditTicket extends Component {
 
   state = {
     accountName: "",
@@ -15,7 +15,6 @@ class AddTicket extends Component {
     primaryResource: "" ,
     ticketTitle:"",
     ticketDescription: "",
-    ticketSolution: "",
     isSubmitSuccessful: false,  
   }
 
@@ -32,16 +31,45 @@ class AddTicket extends Component {
     this.setState({ primaryResource: technician})
   }
 
+  componentDidMount() {
+    const { match: { params } } = this.props;
+    //console.log(params.clientId)  
+    axios.get(`${process.env.REACT_APP_API_URL}/tickets/ticketEdit/${params.ticketId}`)
+    .then(response => {
+      console.log(response.data.data);
+      // update our state array with the data from the API
+      this.setState({ 
+                      accountName: response.data.data.accountName,
+                      contact: response.data.data.contact,
+                      status: response.data.data.status,
+                      priority: response.data.data.priority,
+                      issueType:response.data.data.issueType,
+                      primaryResource:response.data.data.primaryResource,
+                      ticketTitle:response.data.data.ticketTitle,
+                      ticketDescription:response.data.data.ticketDescription,
+                      ticketSolution: response.data.data.ticketSolution,
+                      ticketId: response.data.data.ticketId
+                    });
+      
+      console.log(this.state)
+    })
+      .catch(err => {
+        //console.log("Phone List ERROR", err);
+        alert("Sorry! Something went wrong.");
+    });
+  }
+
   handleSubmit(event){
     event.preventDefault();
-
-    axios.post(
-      `${process.env.REACT_APP_API_URL}/tickets/addTicket`,
+    const { match: { params } } = this.props;
+    console.log("pre-submit", this.state) 
+    axios.put(
+      `${process.env.REACT_APP_API_URL}/tickets/updateTicket/${params.ticketId}`,
         this.state,
         { withCredentials: true }
     )
     .then( response => {
-        console.log("new ticket: ", response.data);
+        console.log("updated ticket: ", response.data);
         this.setState({ isSubmitSuccessful: true })
         this.props.history.push('/view-ticket'); 
     } )
@@ -54,7 +82,7 @@ class AddTicket extends Component {
           <div className="col-md-12 mx-auto">
           <div className="card rounded-0">
               <div className="card-header">
-                  <h3 className="mb-0 my-2">Add Ticket</h3>
+                  <h3 className="mb-0 my-2">Ticket # {this.state.ticketId}</h3>
               </div>
           <div className="card-body"> 
           <form onSubmit={ event => this.handleSubmit(event) } > 
@@ -62,7 +90,7 @@ class AddTicket extends Component {
               <div className="col-md-4 mx-auto">            
                 <div className="form-group">
                     <label> Account Name: </label>                  
-                    <DropdownClient sendUser={ user => this.getClient(user) } className="form-control"  />
+                    <DropdownClient sendUser={ user => this.getClient(user) } clientSelected={ this.state.accountName} className="form-control"  />
                   </div>                
                   <div className="form-group">
                       <label> Contact: </label>
@@ -106,8 +134,8 @@ class AddTicket extends Component {
                 </div>
                   <div className="form-group"> 
                   <label> Primary Resource: </label> 
-                  <DropdownResource sendUser={ user => this.getTech(user) }  />
-              </div>
+                  <DropdownResource sendUser={ user => this.getTech(user) } selectedTechnician = {this.state.primaryResource}  />
+                </div>
                 </div>
                 <div className="col-md-8 mx-auto"> 
                   <div className="form-group"> 
@@ -125,14 +153,25 @@ class AddTicket extends Component {
                       <textarea className="form-control z-depth-1"
                         value = { this.state.ticketDescription }
                         onChange={ e => this.genericSync(e) }
-                        rows="10"
+                        rows="6"
                         type = "text"
                         name = "ticketDescription"
                         placeholder = "Add Ticket Summary"
                     />
-                  </div>           
+                  </div> 
+                  <div className="form-group"> 
+                    <label> Solution: </label>
+                      <textarea className="form-control z-depth-1"
+                        value = { this.state.ticketSolution }
+                        onChange={ e => this.genericSync(e) }
+                        rows="6"
+                        type = "text"
+                        name = "ticketSolution"
+                        placeholder = "Add Ticket Solution"
+                    />
+                  </div>              
                 </div>
-              <button className="btn btn-secondary btn-lg btn-block">Submit</button>        
+              <button className="btn btn-secondary btn-lg btn-block">Update Ticket</button>        
               </div>
           </form>
         </div>
@@ -142,9 +181,6 @@ class AddTicket extends Component {
      
     )
   }
-
-
-
 }
 
-export default AddTicket;
+export default EditTicket;

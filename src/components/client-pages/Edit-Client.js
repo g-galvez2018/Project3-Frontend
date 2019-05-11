@@ -54,7 +54,8 @@ class EditClient extends Component {
         { withCredentials: true }
     )
     .then( response => {
-        console.log("updated client: ", response.data);        
+        console.log("updated client: ", response.data); 
+        this.props.history.push('/client-list');        
     } )
     .catch( err => console.log(err) );
      
