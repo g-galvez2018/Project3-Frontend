@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import './App.css';
 
-import { Switch, NavLink, Route, Redirect, Link } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 
-import { withRouter } from 'react-router-dom'
+
 
 import axios from "axios";
 
