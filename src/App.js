@@ -75,10 +75,7 @@ class App extends Component {
       });
   }
 
-  render() {
-    //const {role} = this.state.currentUser
-   // console.log(role)
-    
+  render() {    
    
     return (
       <div className="App">        

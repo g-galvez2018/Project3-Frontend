@@ -6,8 +6,7 @@ class UserList extends Component {
     state = {
       userArray:[]
     } 
-    componentDidMount() {
-      // retrieve the info from the API as soon as the component loads
+    componentDidMount() {      
       axios.get(
         `${process.env.REACT_APP_API_URL}/api/usersList`,
         // { withCredentials: true } // FORCE axios to send cookies across domains
