@@ -15,12 +15,11 @@ class EditUser extends Component {
     this.setState({ [name]: value });
   }
   componentDidMount() {
-    const { match: { params } } = this.props;
-    //console.log(params.clientId)  
+    const { match: { params } } = this.props;     
     axios.get(`${process.env.REACT_APP_API_URL}/api/profile/${params.userId}`)
     .then(response => {
       console.log("response",response.data.data);
-      // update our state array with the data from the API
+      
       this.setState({ 
                       fullName: response.data.data.fullName,
                       email: response.data.data.email,
