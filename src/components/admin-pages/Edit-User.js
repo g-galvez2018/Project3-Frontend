@@ -9,7 +9,7 @@ class EditUser extends Component {
       status: "",
       role: "",             
   }
-  //Update state of inputs
+  
   genericSync(event) {
     const { name, value } = event.target;
     this.setState({ [name]: value });
