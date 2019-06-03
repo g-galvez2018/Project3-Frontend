@@ -2,10 +2,7 @@ import React, { Component } from "react";
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 
-
-
-class Login extends Component {
-   
+class Login extends Component {   
     state = {
         email: "",
         originalPassword: "",
@@ -18,8 +15,7 @@ class Login extends Component {
     }
 
     handleSubmit(event) {
-        event.preventDefault();
-    
+        event.preventDefault();    
         axios.post(
             `${process.env.REACT_APP_API_URL}/api/login`,
             this.state,
