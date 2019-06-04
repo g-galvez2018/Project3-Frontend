@@ -8,10 +8,12 @@ class Signup extends Component {
      originalPassword: "",
      message: null
   }; 
+
   genericSync(event){
     const { name, value } = event.target;
     this.setState({ [name]:value });
   }
+  
   handleSubmit(event){
     event.preventDefault();
     axios.post(

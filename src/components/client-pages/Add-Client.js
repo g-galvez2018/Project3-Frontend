@@ -1,18 +1,24 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
+import StatesData from '../../data/states.json'
+
 class AddClient extends Component {
   state = {
     accountName:"",
-    address1:"",
-    Phone:"",
-    active:false,    
-    isSubmitSuccessful:false
+    address:"",
+    city: "",
+    state: "",
+    zipCode: "",
+    phone:"",
+    active:false,   
   }
+
   genericSync(event) {
     const { name, value } = event.target;
     this.setState({ [name]: value });    
   } 
+
   toggleChange = () => {
     this.setState({
       active: !this.state.active      
@@ -27,8 +33,7 @@ class AddClient extends Component {
         { withCredentials: true }
     )
     .then( response => {
-        console.log("new client: ", response.data);
-        this.setState({ isSubmitSuccessful: true })
+        console.log("new client: ", response.data);        
         this.props.history.push('/client-list')
     } )
     .catch( err => console.log(err) );
@@ -39,7 +44,7 @@ class AddClient extends Component {
         <div className="col-md-6 mx-auto">
           <div className="card rounded-0">
             <div className="card-header">
-                <h3 className="mb-0 my-2">Add Account</h3>
+                <h3 className="mb-0 my-2">Add Client Account Information</h3>
             </div>
           <div className="card-body">      
             <form onSubmit={event => this.handleSubmit(event)}>
@@ -61,18 +66,53 @@ class AddClient extends Component {
                     value = { this.state.address1 }
                     onChange={ e => this.genericSync(e) }
                     type = "text"
-                    name = "address1"
+                    name = "address"
                     placeholder = ""
                 /> 
-              </div>            
+              </div> 
+              <div className="row">
+                <div className= "col-md-8 mx-auto">
+                  <div className="form-group ">
+                    <label>City:</label>
+                    <input 
+                        className="form-control"
+                        value = { this.state.city }
+                        onChange={ e => this.genericSync(e) }
+                        type = "text"
+                        name = "city"
+                        placeholder = ""
+                    /> 
+                  </div>
+                </div>
+                <div className= "col-md-4 mx-auto">
+                    <div className="form-group">
+                      <label>State:</label>
+                      <select className="form-control" onChange={ event => this.genericSync(event) } value = {this.state.state} name="state"> 
+                            <option>- Select State -</option>       
+                          { StatesData.map(stateName => <option key={ stateName.name } value={ stateName.abbreviation }> { stateName.abbreviation } </option> ) }
+                      </select>
+                    </div> 
+                  </div>
+              </div> 
+              <div className="form-group">
+                <label>Zip Code:</label>
+                <input 
+                    className="form-control"
+                    value = { this.state.zipCode }
+                    onChange={ e => this.genericSync(e) }
+                    type = "text"
+                    name = "zipCode"
+                    placeholder = ""
+                /> 
+              </div>                         
               <div className="form-group">
                 <label>Phone:</label>
                 <input 
                     className="form-control"
-                    value = { this.state.Phone }
+                    value = { this.state.phone }
                     onChange={ e => this.genericSync(e) }
                     type = "text"
-                    name = "Phone"
+                    name = "phone"
                     placeholder = ""
                 />  
               </div>            
@@ -85,7 +125,8 @@ class AddClient extends Component {
                     checked={this.state.active}
                     onChange={this.toggleChange}
                 />  
-              </div>            
+              </div>              
+                           
               <button className="btn btn-secondary btn-lg btn-block">Submit</button> 
             </form>
             </div>

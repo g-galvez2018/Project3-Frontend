@@ -36,6 +36,9 @@ class ClientList extends Component {
                 <tr>
                   <th scope="col">Account Name</th>
                   <th scope="col">Address</th> 
+                  <th scope="col">City</th>
+                  <th scope="col">State</th>
+                  <th scope="col">Zip Code</th>
                   <th scope="col">Phone</th>  
                   <th scope="col">Action</th>              
                 </tr>
@@ -45,8 +48,11 @@ class ClientList extends Component {
                   return(
                     <tr key={ oneClient._id }>
                         <td> {oneClient.accountName} </td>
-                        <td> {oneClient.address1} </td>
-                        <td> {oneClient.Phone} </td>                        
+                        <td> {oneClient.address} </td>
+                        <td> {oneClient.city} </td>
+                        <td> {oneClient.state} </td>
+                        <td> {oneClient.zipCode} </td>
+                        <td> {oneClient.phone} </td>                        
                         <td><Link to={`/edit-client/${oneClient._id}`}>
                           <button className="btn btn-secondary btn-sm">Edit</button>  
                           </Link>
