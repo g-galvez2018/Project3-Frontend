@@ -13,12 +13,12 @@ class AddClient extends Component {
     phone:"",
     active:false,   
   }
-
+  //Sync data from form controls
   genericSync(event) {
     const { name, value } = event.target;
     this.setState({ [name]: value });    
   } 
-
+  //Update state of Checkbox
   toggleChange = () => {
     this.setState({
       active: !this.state.active      

@@ -1,21 +1,23 @@
 import React, { Component } from 'react';
 import axios from "axios";
 
-class EditClient extends Component {
-  
+import StatesData from '../../data/states.json'
+
+class EditClient extends Component {  
   state = {
       accountName: "",
-      address1: "",
-      Phone: "",
+      address: "",
+      city:"",
+      state:"",
+      zipCode:"",
+      phone: "",
       active: false        
   }  
-
-  //Update state of inputs
+  //Sync data from form controls
   genericSync(event) {
     const { name, value } = event.target;
     this.setState({ [name]: value });
   }
-
   //Update state of checkbox
   toggleChange = () => {
     this.setState({
@@ -23,45 +25,38 @@ class EditClient extends Component {
     });    
   }
 
+  //Load form data 
   componentDidMount() {
-    const { match: { params } } = this.props;
-    //console.log(params.clientId)  
+    const { match: { params } } = this.props;    
     axios.get(`${process.env.REACT_APP_API_URL}/clients/clientListEdit/${params.clientId}`)
-    .then(response => {
-      console.log(response.data.data);
-      // update our state array with the data from the API
-      this.setState({ 
-                      accountName: response.data.data.accountName,
-                      address1: response.data.data.address1,
-                      Phone:response.data.data.Phone,
-                      active: response.data.data.active
-                    });
-      console.log(this.state)
-    })
-      .catch(err => {
-        //console.log("Phone List ERROR", err);
-        alert("Sorry! Something went wrong.");
-    });
+      .then(response => {      
+        // update our state array with the data from the API
+        this.setState({ 
+            accountName: response.data.data.accountName,
+            address: response.data.data.address,
+            city: response.data.data.city,
+            state: response.data.data.state,
+            zipCode: response.data.data.zipCode,
+            phone:response.data.data.phone,
+            active: response.data.data.active
+        });      
+      })
+      .catch(err =>  console.log(err));
   }
 
   handleSubmit(event) {    
     event.preventDefault(); 
-    const { match: { params } } = this.props;
-    console.log("submit", this.state)  
+    const { match: { params } } = this.props;      
     axios.put(     
       `${process.env.REACT_APP_API_URL}/clients/updateClient/${params.clientId}`,
          this.state,
         { withCredentials: true }
     )
-    .then( response => {
-        console.log("updated client: ", response.data); 
-        this.props.history.push('/client-list');        
-    } )
-    .catch( err => console.log(err) );
-     
-  }
-
-  
+      .then( response => {           
+          this.props.history.push('/client-list');        
+      })
+      .catch( err => console.log(err) );     
+  }  
 
   render(){    
     return(
@@ -88,21 +83,45 @@ class EditClient extends Component {
               <label>Address:</label>
               <input 
                   className = "form-control"
-                  value = { this.state.address1 }
+                  value = { this.state.address }
                   onChange={ e => this.genericSync(e) }
                   type = "text"
-                  name = "address1"              
+                  name = "address"              
               />
             </div>
+
+            <div className="row">
+                <div className= "col-md-8 mx-auto">
+                  <div className="form-group ">
+                    <label>City:</label>
+                    <input 
+                        className="form-control"
+                        value = { this.state.city }
+                        onChange={ e => this.genericSync(e) }
+                        type = "text"
+                        name = "city"                        
+                    /> 
+                  </div>
+                </div>
+                <div className= "col-md-4 mx-auto">
+                  <div className="form-group">
+                    <label>State:</label>
+                    <select className="form-control" onChange={ event => this.genericSync(event) } value = {this.state.state} name="state"> 
+                          <option>- Select State -</option>       
+                        { StatesData.map(stateName => <option key={ stateName.name } value={ stateName.abbreviation }> { stateName.abbreviation } </option> ) }
+                    </select>
+                  </div> 
+                </div>
+            </div> 
               
             <div className="form-group">
               <label>Phone:</label>
               <input 
                   className = "form-control"
-                  value = { this.state.Phone }
+                  value = { this.state.phone }
                   onChange={ e => this.genericSync(e) }
                   type = "text"
-                  name = "Phone"              
+                  name = "phone"              
               />
             </div>
             

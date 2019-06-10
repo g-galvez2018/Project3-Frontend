@@ -33,25 +33,21 @@ class EditTicket extends Component {
 
   componentDidMount() {
     const { match: { params } } = this.props;
-    //console.log(params.clientId)  
+    
     axios.get(`${process.env.REACT_APP_API_URL}/tickets/ticketEdit/${params.ticketId}`)
-    .then(response => {
-      console.log(response.data.data);
-      // update our state array with the data from the API
+    .then(response => {      
       this.setState({ 
-                      accountName: response.data.data.accountName,
-                      contact: response.data.data.contact,
-                      status: response.data.data.status,
-                      priority: response.data.data.priority,
-                      issueType:response.data.data.issueType,
-                      primaryResource:response.data.data.primaryResource,
-                      ticketTitle:response.data.data.ticketTitle,
-                      ticketDescription:response.data.data.ticketDescription,
-                      ticketSolution: response.data.data.ticketSolution,
-                      ticketId: response.data.data.ticketId
-                    });
-      
-      console.log(this.state)
+          accountName: response.data.data.accountName,
+          contact: response.data.data.contact,
+          status: response.data.data.status,
+          priority: response.data.data.priority,
+          issueType:response.data.data.issueType,
+          primaryResource:response.data.data.primaryResource,
+          ticketTitle:response.data.data.ticketTitle,
+          ticketDescription:response.data.data.ticketDescription,
+          ticketSolution: response.data.data.ticketSolution,
+          ticketId: response.data.data.ticketId
+      });      
     })
       .catch(err => {
         //console.log("Phone List ERROR", err);
