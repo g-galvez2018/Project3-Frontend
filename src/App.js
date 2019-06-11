@@ -36,7 +36,6 @@ class App extends Component {
     .then(responseFromBackend => {
      console.log("Check User in APP.JS: ",responseFromBackend.data.userDoc)
       const { userDoc } = responseFromBackend.data;
-      //console.log("userDoc", userDoc.role)
       this.syncCurrentUser(userDoc);
     })
     .catch(err => console.log(" Err while check the user: ", err))
