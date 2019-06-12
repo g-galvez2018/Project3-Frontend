@@ -59,10 +59,8 @@ class App extends Component {
         { withCredentials: true } // FORCE axios to send cookies across domains
       )
       .then(response => {
-        const { userDoc } = response.data;
-        console.log("salio", userDoc);
-        this.syncCurrentUser(userDoc);
-        console.log("salio", "success");
+        const { userDoc } = response.data;        
+        this.syncCurrentUser(userDoc);       
         //this.props.history.push('/login-page'); 
         
       })
