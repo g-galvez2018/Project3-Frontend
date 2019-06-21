@@ -18,7 +18,7 @@ class AddClient extends Component {
     const { name, value } = event.target;
     this.setState({ [name]: value });    
   } 
-  //Update state of Checkbox when switching on and off
+  //Update state of Checkbox 
   toggleChange = () => {
     this.setState({
       active: !this.state.active      
