@@ -13,7 +13,7 @@ class AddClient extends Component {
     phone:"",
     active:false,   
   }
-  //Sync data from form 
+  //Sync data from form controls
   genericSync(event) {
     const { name, value } = event.target;
     this.setState({ [name]: value });    
