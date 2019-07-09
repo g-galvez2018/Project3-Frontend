@@ -50,8 +50,7 @@ class EditTicket extends Component {
       });      
     })
       .catch(err => {
-        //console.log("Phone List ERROR", err);
-        alert("Sorry! Something went wrong.");
+          alert("Sorry! Something went wrong.");
     });
   }
 
