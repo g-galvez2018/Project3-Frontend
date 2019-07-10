@@ -39,7 +39,7 @@ class Login extends Component {
 
 
     render(){
-        // check if currentUser exists and if so, redirect to some other page
+        // check if currentUser exists and if so, redirect to another page
         if(this.props.currentUser){
             return <Redirect to="/" />
         }
